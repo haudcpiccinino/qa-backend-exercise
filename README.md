@@ -1,17 +1,17 @@
 # QA Backend Exercise
 
+Service for testing RESTful API.
 
-Add user to list
-```bash
-curl -X POST --header "Content-Type: application/json" -d '{"name":"My name"}' http://localhost:8000/user
-```
 
-Remove user from list
-
-```bash
-curl -X DELETE --header "Content-Type: application/json" -d '{"name":"My name"}' http://localhost:8000/user
-```
+1.	Add user to list
+	```bash
+	curl -X POST --header "Content-Type: application/json" -d '{"name":"My name"}' http://https://qa-backend-exercise.herokuapp.com/user
+	```
+2. 	Remove user from list
+	```bash
+	curl -X DELETE --header "Content-Type: application/json" -d '{"name":"My name"}' https://qa-backend-exercise.herokuapp.com/user
+	```
 
 ---
 
-[Link](https://qa-backend-exercise.herokuapp.com)
+[Live](https://qa-backend-exercise.herokuapp.com)

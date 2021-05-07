@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, render_template
+
 app = Flask(__name__)
 
 users = [
@@ -7,11 +8,13 @@ users = [
     )
 ]
 
+
 @app.route('/info', methods=['GET'])
 def respond():
     response = {}
     response["version"] = 1
     return jsonify(response), 200
+
 
 @app.route('/user', methods=['GET'])
 def user_list():
@@ -25,6 +28,7 @@ def user_list():
     else: 
         return jsonify(users), 200
 
+
 @app.route('/user', methods=['POST'])
 def user_create():
     req = request.get_json()
@@ -34,6 +38,7 @@ def user_create():
     )
     users.append(user)
     return jsonify({'message':'Added '+user_name}), 201
+
 
 @app.route('/user', methods=['DELETE'])
 def user_delete():
@@ -45,7 +50,7 @@ def user_delete():
     users.remove(user)
     return jsonify({'message':'Deleted '+user_name}), 200
 
+
 @app.route('/')
 def index():
     return render_template('welcome.html')
-
