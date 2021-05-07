@@ -1,1 +1,1 @@
-web: gunicorn -c gunicorn.conf.py exercise:app
+web: gunicorn exercise:app
