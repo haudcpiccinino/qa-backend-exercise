@@ -8,6 +8,17 @@
 		body { margin: 0 0; padding: 2ex 2em; font-family: sans-serif; background: #f0f0f0; }
 		h1, h2 { font-family: sans-serif; color: rgb(81,21,135); }
 		hr { border: 0; height: 1px; background: rgb(81,21,135); }
+		li {
+			/*display: block;*/
+			margin: 0;
+			padding: 1ex 0;
+		}
+		table {
+			margin: 0;
+			padding: 0;
+			border: 1px;
+		}
+		table tbody td:first-child { vertical-align: top; min-width: 20ex; }
 	</style>
 </head>
 <body>
@@ -17,9 +28,101 @@
 	<p>The aim of this test is a RESTful API on this domain.</p>
 	<p>Create Test Specification and execute the test for the following items:</p>
 	<ol>
-		<li>Get User</li>
-		<li>Add User</li>
-		<li>Delete User</li>
+		<li>
+			<p>List users</p>
+			<div>
+				<table>
+					<body>
+						<tr>
+							<td>Path: </td>
+							<td><code>/user</code></td>
+						</tr>
+						<tr>
+							<td>Method: </td>
+							<td><code>GET</code></td>
+						</tr>
+						<tr>
+							<td>Filter (optional): </td>
+							<td><code>name</code></td>
+						</tr>
+						<tr>
+							<td>Response: </td>
+							<td>List of users in JSON format.</td>
+						</tr>
+						<tr>
+							<td>Example: </td>
+							<td>
+								<code>curl -sS https://qa-backend-exercise.herokuapp.com/user?name=dorothy | jq</code>
+								<br/>
+								<code>[ { "name": "Dorothy Gale" } ]</code>
+							</td>
+						</tr>
+					</body>
+				</table>
+			</div>
+		</li>
+		<li>
+			<p>Add user</p>
+			<div>
+				<table>
+					<body>
+						<tr>
+							<td>Path: </td>
+							<td><code>/user</code></td>
+						</tr>
+						<tr>
+							<td>Method: </td>
+							<td><code>POST</code></td>
+						</tr>
+						<tr>
+							<td>Payload (JSON)</td>
+							<td><code>{ name: "MY NAME" }</code></td>
+						</tr>
+						<tr>
+							<td>Response: </td>
+							<td>Message with the added user.</td>
+						</tr>
+						<tr>
+							<td>Example: </td>
+							<td>
+								<code>curl -sS -X POST --header "Content-Type: application/json" -d '{"name":"MY NAME"}' https://qa-backend-exercise.herokuapp.com/user | jq</code>
+								<br/>
+								<code>{ "message": "Added MY NAME" }</code>
+							</td>
+						</tr>
+					</body>
+				</table>
+			</div>
+		</li>
+		<li>
+			<p>Remove user</p>
+			<div>
+				<table>
+					<body>
+						<tr>
+							<td>Path: </td>
+							<td><code>/user</code></td>
+						</tr>
+						<tr>
+							<td>Method: </td>
+							<td><code>DELETE</code></td>
+						</tr>
+						<tr>
+							<td>Response: </td>
+							<td>Message with the remove user.</td>
+						</tr>
+						<tr>
+							<td>Example: </td>
+							<td>
+								<code>curl -sS -X DELETE --header "Content-Type: application/json" -d '{"name":"MY NAME"}' | jq</code>
+								<br/>
+								<code>{ "message": "Removed MY NAME" }</code>
+							</td>
+						</tr>
+					</body>
+				</table>
+			</div>
+		</li>
 	</ol>
 </body>
 </html>

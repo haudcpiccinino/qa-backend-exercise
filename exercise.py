@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request, jsonify, render_template
 
 app = Flask(__name__)
@@ -12,20 +13,26 @@ users = [
 @app.route('/info', methods=['GET'])
 def respond():
     response = {}
-    response["version"] = 1
+    if 'APP_TEST_VAR' in os.environ:
+        response["version"] = os.environ['APP_VERSION']
+    else:
+        response["version"] = 'n/a'
     return jsonify(response), 200
 
 
 @app.route('/user', methods=['GET'])
 def user_list():
     if 'name' in request.args:
-        n = request.args.get('name')
-        found = []
-        for user in users:
-            if n.lower() in user.get('name').lower():
-                found.append(user)
-        return jsonify(found), 200
-    else: 
+        try:
+            n = request.args.get('name')
+            found = []
+            for user in users:
+                if n.lower() in user.get('name').lower():
+                    found.append(user)
+            return jsonify(found), 200
+        except:
+            return jsonify({'message':'Something went wrong. Users cannot be listed.'}), 400
+    else:
         return jsonify(users), 200
 
 
@@ -36,8 +43,13 @@ def user_create():
     user = dict(
         name = user_name
     )
-    users.append(user)
-    return jsonify({'message':'Added '+user_name}), 201
+    try:
+        users.append(user)
+        return jsonify({'message':'Added '+user_name}), 201
+    except:
+        return jsonify({'message':'Something went wrong. User '+user_name+' was not added'}), 400
+
+
 
 
 @app.route('/user', methods=['DELETE'])
@@ -47,8 +59,12 @@ def user_delete():
     user = dict(
         name = user_name
     )
-    users.remove(user)
-    return jsonify({'message':'Deleted '+user_name}), 200
+    try:
+        users.remove(user)
+        return jsonify({'message':'Removed '+ user_name}), 200
+    except:
+        return jsonify({'message':'Something went wrong. User '+ user_name+' was not removed.'}), 400
+
 
 
 @app.route('/')
