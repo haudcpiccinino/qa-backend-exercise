@@ -13,7 +13,7 @@ users = [
 @app.route('/info', methods=['GET'])
 def respond():
     response = {}
-    if 'APP_TEST_VAR' in os.environ:
+    if 'APP_VERSION' in os.environ:
         response["version"] = os.environ['APP_VERSION']
     else:
         response["version"] = 'n/a'
@@ -30,8 +30,8 @@ def user_list():
                 if n.lower() in user.get('name').lower():
                     found.append(user)
             return jsonify(found), 200
-        except:
-            return jsonify({'message':'Something went wrong. Users cannot be listed.'}), 400
+        except Exception as e:
+            return jsonify({ 'error': str(e) }), 400
     else:
         return jsonify(users), 200
 
@@ -46,8 +46,8 @@ def user_create():
     try:
         users.append(user)
         return jsonify({'message':'Added '+user_name}), 201
-    except:
-        return jsonify({'message':'Something went wrong. User '+user_name+' was not added'}), 400
+    except Exception as e:
+        return jsonify({ 'error': str(e) }), 400
 
 
 
@@ -62,8 +62,8 @@ def user_delete():
     try:
         users.remove(user)
         return jsonify({'message':'Removed '+ user_name}), 200
-    except:
-        return jsonify({'message':'Something went wrong. User '+ user_name+' was not removed.'}), 400
+    except Exception as e:
+        return jsonify({ 'error': str(e) }), 400
 
 
 
